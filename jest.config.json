@@ -1,7 +1,8 @@
 {
   "verbose": true,
+  "preset": "ts-jest",
   "transform": {
-    ".(ts|tsx)": "ts-jest"
+    "^.+\\.tsx?$": "ts-jest"
   },
   "testRegex": "(/spec/.*|\\.(test|spec))\\.(ts|tsx|js)$",
   "moduleFileExtensions": ["ts", "tsx", "js"],
@@ -14,6 +15,6 @@
       "tsConfig": "./tsconfig.json"
     }
   },
-  "setupFiles": ["./jest.stubs.js"],
+  "setupFiles": ["./jest.stubs.js", "./src/setupEnzyme.ts"],
   "testURL": "http://localhost/"
 }

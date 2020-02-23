@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { Route, Switch } from 'react-router';
 
-export default function App(): JSX.Element {
-  return (
-    <Router>
-      <div>
-        <Switch>
-          <Route path="/">
-            <header className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
-              <p>
-                Edit <code>src/App.tsx</code> and save to reload.
-              </p>
-              <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-                Learn React
-              </a>
-            </header>
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  );
+import { ConnectedRouter } from 'connected-react-router';
+import store, { history } from './store';
+import { getPath } from './router-paths';
+import Home from './routes/Home';
+import ViewCharacter from './routes/ViewCharacter';
+
+export default class App extends Component {
+  render(): React.ReactNode {
+    return (
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <Switch>
+            <Route exact path={getPath('home')} render={() => <Home></Home>} />
+            <Route
+              exact
+              path={getPath('viewCharacter', ':character')}
+              render={props => <ViewCharacter {...props} />}
+            />
+            <Route render={() => <div>Page not found!</div>} />
+          </Switch>
+        </ConnectedRouter>
+      </Provider>
+    );
+  }
 }
